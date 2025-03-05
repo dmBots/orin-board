@@ -38,11 +38,9 @@ sudo ip link set up can0
 sudo candump can0
 ```
 
-![1](https://gitee.com/kit-miao/orin-board/raw/master/%E5%9B%BE%E7%89%87/ORIN_CAN_SEND.png)
+![ORIN_CAN_SEND](./image/ORIN_CAN_SEND.png)
 
-
-
-![1](https://gitee.com/kit-miao/orin-board/raw/master/%E5%9B%BE%E7%89%87/ORIN_CAN.png)
+![ORIN_CAN](./image/ORIN_CAN.png)
 
 6.发送CAN帧
 发送CAN帧，可以使用下列命令,向can0通道发送一个4字节的CAN消息，并在CAN ID 001处设置11223344AABBCCDD的数据。
