@@ -16,7 +16,7 @@ sudo dmesg | grep -i uart
 ```
 <img src="./docs/uart.png" width="800" height="auto">
 
-上面的ttyTHS0就是载板上的uart1(刚好反了)，出现这个说明uart1使能了。
+上面的ttyTHS0就是载板上的串口1(刚好反了)，出现这个说明串口1使能了。
 
 2. 然后查看并且修改设备树
 
@@ -33,12 +33,11 @@ sudo apt-get install device-tree-compiler
 sudo su
 ```
 然后反编译设备树文件
+
 ***注意A是你的设备树文件名***
 ```shell
 dtc -I dtb -O dts A.dtb > A.dts
 ```
-***注意A是你的设备树文件名***
-
 然后打开A.dts：
 ```shell
 nano A.dts
@@ -149,9 +148,7 @@ if __name__ == "__main__":
     
 ```
 出现如下说明串口0和串口1正常工作:
-```shell
-sudo dmesg | grep -i uart
-```
+
 <img src="./docs/ser.png" width="700" height="auto">
 
 
