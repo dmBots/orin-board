@@ -45,9 +45,6 @@ nano A.dts
 ```
 然后按键盘的ctrl+w搜索关键字“serial”，我的会出现如下：
 
-<img src="./docs/serial3100000.png" width="800" height="auto">
-
-
 <img src="./docs/serial3100000STA.png" width="800" height="auto">
 
 可以看到这个serial@3100000就是对应的上面的ttyTHS0，也就是orin载板上的uart1，然后他的status=“okay”，说明他使能了。
@@ -61,9 +58,6 @@ nano A.dts
 可以看到serial1（orin载板上的uart0）对应的是serial@3110000。
 
 继续按键盘的ctrl+w搜索关键字“serial”，搜索到serial@3110000：
-
-<img src="./docs/serial3110000.png" width="800" height="auto">
-
 
 <img src="./docs/serial3110000STA.png" width="800" height="auto">
 
