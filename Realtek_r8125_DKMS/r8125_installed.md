@@ -39,7 +39,7 @@ sudo apt install realtek-r8125-dkms
 
 - 完成上述⼯作后需要重启设备
 ```bash
-roboot
+reboot
 ```
 
 - 若重启后发现驱动没有正常生效，请执行以下操作并尝试方法2的操作
@@ -79,7 +79,7 @@ sudo bash ./autorun.sh
 
 - 完成上述⼯作后需要重启设备
 ```bash
-roboot
+reboot
 ```
 
 > **如果您在使用中发现问题或者好的注意，欢迎您在仓库议题留下您的宝贵意见，或在微信群、淘宝账户联系我们**
