@@ -73,5 +73,5 @@ sudo modprobe iwlwifi
 ```
 ![驱动模块检查](images/image_03.png "截图")
 
-完成上述工作后需要重启电脑
+**完成上述工作后需要重启电脑**
 
