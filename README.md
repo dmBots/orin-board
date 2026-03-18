@@ -22,11 +22,11 @@ orin-board$ tree -L 2
 │   ├── 外壳
 │   ├── 网口转接板
 │   └── 达妙科技DM-ORIN NX V2.X使用说明书V1.0.pdf
-├── guest_source_or_other_information
+├── guest_source_or_other_information		# 客户方案和其他社区资料
 │   ├── CAN功能测试
 │   ├── USB3.0设备树修改
 │   └── 客户自制外壳
-├── orin载板can控制达妙电机例程
+├── orin载板can控制达妙电机例程		# 达妙 orin 载板 can 控制达妙电机例程
 │   ├── dm_hw
 │   ├── docs
 │   ├── README.en.md
@@ -40,7 +40,7 @@ orin-board$ tree -L 2
 
 1. 维护本仓库需要明确的的分类到具体的目标文件夹
 
-2. 请您在每次更新后，重新更新2级目录的内容并对更新的条目，并对新增文件说明
+2. 请您在每次更新后，重新更新2级目录的内容并对更新的条目和对新增文件进行说明
 
 3. 仓库的内容尽可能做中英文两份
 
