@@ -7,10 +7,13 @@ orin-board$ tree -L 2
 ├── CAN功能测试.md
 ├── dm_orin_board_public_information		# 通用教程目录，适用于v1、v2载板
 │   ├── iwlwifi-offline						# Intel 无线网卡驱动安装
-│   └── serial_usb3_dts_patches				# 设备树适配
+│   ├── rtc设置.rar 
+│   ├── serial_usb3_dts_patches				# 设备树适配
+│   └── 使能UART方法
 ├── dm_orin_board_v1_information		# DM_Orin_Board_V1系列资料
-│   ├── 2D标注		# 
-│   └── 说明书
+│   ├── 2D标注
+│   ├── Orin_NX-RJ45-V1.0.pdf
+│   └── 说明书		# v1版本说明书
 ├── dm_orin_board_v2_information		# DM_Orin_Board_V2系列资料
 │   ├── 2D  dm_orin_nx-cb-v3_1.pdf
 │   ├── 3D  DM Orin NX-CB-V3.2.zip
@@ -20,34 +23,17 @@ orin-board$ tree -L 2
 │   ├── 网口转接板
 │   └── 达妙科技DM-ORIN NX V2.X使用说明书V1.0.pdf
 ├── guest_source_or_other_information
+│   ├── CAN功能测试
+│   ├── USB3.0设备树修改
 │   └── 客户自制外壳
-├── image
-│   ├── 1741161762164955441889280.png
-│   ├── ORIN_CAN.png
-│   ├── ORIN_CAN_SEND.png
-│   ├── 文件结构.png
-│   └── 解压源码.png
-├── Jetson_Orin_NX烧录+设备树更改-看这一篇就够了.md
-├── Orin_NX-RJ45-V1.0.pdf
 ├── orin载板can控制达妙电机例程
 │   ├── dm_hw
 │   ├── docs
 │   ├── README.en.md
 │   └── README.md
-├── README.md
-├── rtc设置.rar
-├── USB3.0设备树修改
-│   ├── kernel_tegra234-p3767-0000-p3509-a02.dtb
-│   ├── kernel_tegra234-p3767-0001-p3768-0000-a0.dtb
-│   ├── Orin nx type-c usb3.0配置.docx
-│   └── tegra234-p3767-0001-p3768-0000-a0.dtb
-└── 使能UART方法
-    ├── docs
-    ├── README.md
-    ├── 修改设备树.txt
-    └── 论坛截图.png
+└── README.md
 
-20 directories, 22 files
+19 directories, 8 files
 ```
 
 ### 更新要求
@@ -57,6 +43,9 @@ orin-board$ tree -L 2
 2. 请您在每次更新后，重新更新2级目录的内容并对更新的条目，并对新增文件说明
 
 3. 仓库的内容尽可能做中英文两份
+
+
+**Jetson Orin NX烧录+设备树更改？看这一篇就够了！：<https://blog.csdn.net/xiongqi123123/article/details/144079706>**
 
 
 
@@ -88,7 +77,7 @@ orin-board$ tree -L 2
 
 可以得到以下的文件结构
 
-![文件结构](./image/文件结构.png)
+![文件结构](./guest_source_or_other_information/CAN功能测试/image/文件结构.png)
 
 将以下命令写入你的`~/.bashrc`或者`~/.zshrc` ,以配置环境变量(注意修改为你自己解压的路径)
 
@@ -101,7 +90,7 @@ export CROSS_COMPILE=$HOME/nv_src/aarch64--glibc--stable-final/bin/aarch64-build
 
 接下来可以解压源码，打开压缩包文件，解压`kernel_src`
 
-![解压源码](./image/解压源码.png)
+![解压源码](./guest_source_or_other_information/CAN功能测试/image/解压源码.png)
 
 然后可以执行一次编译测试一下,第一波会时间比较久（如果你知道在做啥，可以修改对应脚本，只编译dtbs相关）
 
