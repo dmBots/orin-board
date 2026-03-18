@@ -84,7 +84,8 @@ export CROSS_COMPILE_AARCH64_PATH=export CROSS_COMPILE=~/you_kernel_ws/aarch64--
 # 在amd（x86）主机上操作时下载工具 
 sudo apt-get install device-tree-compiler 
 # Jetson板卡上操作时下载工具
-sudo apt install tegra-21x-dt         
+sudo apt install tegra-21x-dt   
+sudo apt-get install libssl-dev      
 ```
 
 *例如：*
@@ -226,12 +227,12 @@ usb3 {
 cd ~/you_kernel_ws/Linux_for_Tegra/source
 make -C kernel
 
-export CROSS_COMPILE_AARCH64_PATH=~/sata/orin_sdk/nvidia_devicetree/aarch64--glibc--stable-2022.08-1
-export CROSS_COMPILE=~/sata/orin_sdk/nvidia_devicetree/aarch64--glibc--stable-2022.08-1/bin/aarch64-buildroot-linux-gnu-
+export CROSS_COMPILE_AARCH64_PATH=~/you_kernel_ws/aarch64--glibc--stable-2022.08-1
+export CROSS_COMPILE=~/you_kernel_ws/aarch64--glibc--stable-2022.08-1/bin/aarch64-buildroot-linux-gnu-
 
 make -C kernel
 export IGNORE_PREEMPT_RT_PRESENCE=1
-export KERNEL_HEADERS=~/sata/orin_sdk/nvidia_devicetree/Linux_for_Tegra/source/kernel/kernel-jammy-src/
+export KERNEL_HEADERS=~/you_kernel_ws/Linux_for_Tegra/source/kernel/kernel-jammy-src/
 
 
 
@@ -242,7 +243,7 @@ export KERNEL_HEADERS=~/sata/orin_sdk/nvidia_devicetree/Linux_for_Tegra/source/k
 
 ```bash
 export IGNORE_PREEMPT_RT_PRESENCE=1
-export KERNEL_HEADERS=~/sata/orin_sdk/nvidia_devicetree/Linux_for_Tegra/source/kernel/kernel-jammy-src/
+export KERNEL_HEADERS=~/you_kernel_ws/Linux_for_Tegra/source/kernel/kernel-jammy-src/
 ```
 
 ![device](images/device_tree_10.png "像这样就是在编译模块了")
@@ -251,7 +252,7 @@ export KERNEL_HEADERS=~/sata/orin_sdk/nvidia_devicetree/Linux_for_Tegra/source/k
 3. 编译设备树
 ```bash
 export IGNORE_PREEMPT_RT_PRESENCE=1
-export KERNEL_HEADERS=~/sata/orin_sdk/nvidia_devicetree/Linux_for_Tegra/source/kernel/kernel-jammy-src/
+export KERNEL_HEADERS=~/you_kernel_ws/Linux_for_Tegra/source/kernel/kernel-jammy-src/
 ```
 
 ![device](images/device_tree_11.png "回车后即可编译设备树")
@@ -263,7 +264,7 @@ export KERNEL_HEADERS=~/sata/orin_sdk/nvidia_devicetree/Linux_for_Tegra/source/k
 
 ![device](images/device_tree_13.png "截图")
 ```bash
-cd ~/sata/orin_sdk/nvidia_devicetree
+cd ~/you_kernel_ws
 
 ll Linux_for_Tegra/source/kernel-devicetree/generic-dts/dtbs/
 ```
@@ -276,7 +277,7 @@ ll Linux_for_Tegra/source/kernel-devicetree/generic-dts/dtbs/
 1. 为Jetson Orin板卡替换设备树
 - 将生成的`.dtb`文件上传到Jetson Orin板卡上
 ```bash
-scp -r ~/sata/orin_sdk/nvidia_devicetree/tegra234-p3768-0000+p3767-0000-nv.dtb ssh ubuntu@example.com：~/
+scp -r ~/you_kernel_ws/tegra234-p3768-0000+p3767-0000-nv.dtb ssh ubuntu@example.com：~/
 ```
 
 - 在Orin板卡上将得到的文件复制到`/boot/dtb/`下
