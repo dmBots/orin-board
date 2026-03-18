@@ -225,16 +225,11 @@ usb3 {
 ```bash
 # 进入Linux_for_Tegra/source
 cd ~/you_kernel_ws/Linux_for_Tegra/source
-make -C kernel
-
+# 设置环境变量
 export CROSS_COMPILE_AARCH64_PATH=~/you_kernel_ws/aarch64--glibc--stable-2022.08-1
 export CROSS_COMPILE=~/you_kernel_ws/aarch64--glibc--stable-2022.08-1/bin/aarch64-buildroot-linux-gnu-
 
 make -C kernel
-export IGNORE_PREEMPT_RT_PRESENCE=1
-export KERNEL_HEADERS=~/you_kernel_ws/Linux_for_Tegra/source/kernel/kernel-jammy-src/
-
-
 
 ```
 ![device](images/device_tree_9.png "像这样就是在编译内核了")
@@ -242,8 +237,14 @@ export KERNEL_HEADERS=~/you_kernel_ws/Linux_for_Tegra/source/kernel/kernel-jammy
 2. 编译模块
 
 ```bash
+# 设置环境变量
+# export CROSS_COMPILE_AARCH64_PATH=~/you_kernel_ws/aarch64--glibc--stable-2022.08-1
+# export CROSS_COMPILE=~/you_kernel_ws/aarch64--glibc--stable-2022.08-1/bin/aarch64-buildroot-linux-gnu-
 export IGNORE_PREEMPT_RT_PRESENCE=1
 export KERNEL_HEADERS=~/you_kernel_ws/Linux_for_Tegra/source/kernel/kernel-jammy-src/
+
+# 编译模块
+make modules
 ```
 
 ![device](images/device_tree_10.png "像这样就是在编译模块了")
@@ -251,8 +252,14 @@ export KERNEL_HEADERS=~/you_kernel_ws/Linux_for_Tegra/source/kernel/kernel-jammy
 
 3. 编译设备树
 ```bash
+# 设置环境变量
+# export CROSS_COMPILE_AARCH64_PATH=~/you_kernel_ws/aarch64--glibc--stable-2022.08-1
+# export CROSS_COMPILE=~/you_kernel_ws/aarch64--glibc--stable-2022.08-1/bin/aarch64-buildroot-linux-gnu-
 export IGNORE_PREEMPT_RT_PRESENCE=1
 export KERNEL_HEADERS=~/you_kernel_ws/Linux_for_Tegra/source/kernel/kernel-jammy-src/
+
+# 编译设备树
+make dtbs
 ```
 
 ![device](images/device_tree_11.png "回车后即可编译设备树")
