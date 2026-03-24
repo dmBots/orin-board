@@ -1,4 +1,4 @@
-# 让设备树适配damiao_orin_board
+# Device_tree_for_ubuntu22.04 <==>  适用于 Ubuntu 22.04 的设备树文件
 
 > damiao_orin_borad是达妙科技研发的第三方载板，截止目前共有v1.0, v1.1 ,v2.1 三个版本。适用于Nvidia Jetson Orin_NX\Orin_Nano系列核心板
 > 在使用过程中,会发现载板的USB2(Type-C)接口默认为挂在在usb2.0的总线上，而导致性能损失；另外，我们也会发现载板的UART 0 设备无法使用。下面我们一起来解决这个问题
@@ -34,7 +34,7 @@ tar -xjvf aarch64--glibc--stable-2022.08-1.tar.bz2
 ![device](images/device_tree_1.png "截图")
 ![device](images/device_tree_2.png "截图")
 
-2. 解压缩源码部分
+3. 解压缩源码部分
 
 ```bash
 cd you_kernel_ws/Linux_for_Tegra/source
@@ -76,16 +76,6 @@ export CROSS_COMPILE_AARCH64_PATH=export CROSS_COMPILE=~/you_kernel_ws/aarch64--
 3. 设置构建脚本为实时配置
 ```bash
 ./generic_rt_build.sh "enable"
-```
-
-3. 根据操作平台选择下载对应的编译工具链
-
-```bash
-# 在amd（x86）主机上操作时下载工具 
-sudo apt-get install device-tree-compiler 
-# Jetson板卡上操作时下载工具
-sudo apt install tegra-21x-dt   
-sudo apt-get install libssl-dev      
 ```
 
 *例如：*
@@ -219,7 +209,7 @@ usb3 {
 ```
 ![device](images/device_tree_8.png "截图")
 
-### 编译内核与设备数
+### 编译内核与设备树
 
 1. 编译内核
 ```bash
@@ -319,9 +309,15 @@ LABEL primary
 lsusb 
 lsusb -t
 ```
+- 检查全部串口是否列出
+
+```bash
+# 是否列出/ttyTHS3 (这是我们使能的串口)
+ls /dev/ttyTHS*
+```
 
 ```log
-(base) nn@ubuntu:~$ lsusb 
+nn@ubuntu:~$ lsusb 
 Bus 002 Device 009: ID 30de:6544 KIOXIA TransMemory     # 识别到USB3Gen2的移动存储单元
 Bus 002 Device 007: ID 05e3:0625 Genesys Logic, Inc. USB3.2 Hub
 Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
@@ -330,7 +326,7 @@ Bus 001 Device 015: ID 05e3:0610 Genesys Logic, Inc. Hub
 Bus 001 Device 006: ID 046d:c52b Logitech, Inc. Unifying Receiver
 Bus 001 Device 003: ID 1a40:0101 Terminus Technology Inc. Hub
 Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
-(base) nn@ubuntu:~$ lsusb -t
+nn@ubuntu:~$ lsusb -t
 /:  Bus 02.Port 1: Dev 1, Class=root_hub, Driver=tegra-xusb/4p, 10000M
     |__ Port 1: Dev 10, If 0, Class=Hub, Driver=hub/4p, 10000M
         |__ Port 4: Dev 11, If 0, Class=Mass Storage, Driver=usb-storage, 5000M     # 以500Mbps的速度挂在到了usb3.0的总线上
@@ -342,8 +338,15 @@ Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
         |__ Port 1: Dev 6, If 0, Class=Human Interface Device, Driver=usbhid, 12M
         |__ Port 4: Dev 5, If 0, Class=Wireless, Driver=btusb, 12M
         |__ Port 4: Dev 5, If 1, Class=Wireless, Driver=btusb, 12M
-(base) nn@ubuntu:~$
+nn@ubuntu:~$
+nn@ubuntu:~$
+nn@ubuntu:~$ ls /dev/ttyTHS*
+/dev/ttyTHS0  /dev/ttyTHS1  /dev/ttyTHS3		# 其中 /ttyTHS3 是我们手动添加使能的
+nn@ubuntu:~$ 
 
 ```
 
-**当你的设备可以挂在在usb3.0的总线上是则表示我们的工作已经成功了**
+**当你的设备可以挂在在usb3.0的总线上，您的串口都存在并且可用。则表示我们的工作已经成功了！**
+
+- 致此，您的配置工作大致已完成，如果您在使用中遇到问题，欢迎在gitee提交议题，我们会第一时间为您处理，请留意您的议题处理进度，也请不要重复提交议题（之前有人提出相似问题时）
+- 感谢您使用达妙科技产品，祝您生活、工作愉快！
