@@ -18,8 +18,8 @@
 2. 构建编译环境
 
 ```bash
-mkdir -p jetson_linxu_35.6.4
-cd jetson_linxu_35.6.4
+mkdir -p jetson_linux_35.6.4
+cd jetson_linux_35.6.4
 
 # 将你下载的文件添加到当前目录里
 # 一定要将下面的`you_download_folder`你的实际下载目录，请不要完全照抄
@@ -67,11 +67,11 @@ sudo apt-get install libssl-dev
 2. 在当前终端添加编译工具链接
 ```bash
 # 切换目录到you_kernel_ws
-cd ~/jetson_linxu_35.6.4/Linux_for_Tegra/source/public/kernel/kernel-5.10
+cd ~/jetson_linux_35.6.4/Linux_for_Tegra/source/public/kernel/kernel-5.10
 
 # 一定要将下面的`you_kernel_ws`你的实际下载目录，请不要完全照抄
 # 首先设置 JETPACK 路径
-export JETPACK=~/jetson_linxu_35.6.4/Linux_for_Tegra
+export JETPACK=~/jetson_linux_35.6.4/Linux_for_Tegra
 
 # 然后设置输出目录（使用 JETPACK 变量）
 export KERNEL_OUT=$JETPACK/../images
@@ -79,14 +79,14 @@ export KERNEL_MODULES_OUT=$JETPACK/../images/modules
 
 # 验证路径是否正确
 echo $KERNEL_OUT
-# 应该显示: ~/jetson_linxu_35.6.4/Linux_for_Tegra/../images
+# 应该显示: ~/jetson_linux_35.6.4/Linux_for_Tegra/../images
 
 # 创建输出目录
 mkdir -p $KERNEL_OUT
 mkdir -p $KERNEL_MODULES_OUT
 
 # 确认交叉编译器路径
-export CROSS_COMPILE=~/jetson_linxu_35.6.4/aarch64--glibc--stable-final/bin/aarch64-buildroot-linux-gnu-
+export CROSS_COMPILE=~/jetson_linux_35.6.4/aarch64--glibc--stable-final/bin/aarch64-buildroot-linux-gnu-
 
 # 验证交叉编译器
 ${CROSS_COMPILE}gcc --version
@@ -219,10 +219,10 @@ ${CROSS_COMPILE}gcc --version
 cd ~/you_kernel_ws/Linux_for_Tegra/source/public/kernel/kernel-5.10
 
 # 设置所有环境变量
-export JETPACK=~/jetson_linxu_35.6.4/Linux_for_Tegra
+export JETPACK=~/jetson_linux_35.6.4/Linux_for_Tegra
 export KERNEL_OUT=$JETPACK/../images
 export KERNEL_MODULES_OUT=$JETPACK/../images/modules
-export CROSS_COMPILE=~/jetson_linxu_35.6.4/aarch64--glibc--stable-final/bin/aarch64-buildroot-linux-gnu-
+export CROSS_COMPILE=~/jetson_linux_35.6.4/aarch64--glibc--stable-final/bin/aarch64-buildroot-linux-gnu-
 
 # 配置内核
 make ARCH=arm64 O=$KERNEL_OUT tegra_defconfig
@@ -232,10 +232,10 @@ make ARCH=arm64 O=$KERNEL_OUT tegra_defconfig
 2. 编译设备树
 ```bash
 # 设置所有环境变量
-# export JETPACK=~/jetson_linxu_35.6.4/Linux_for_Tegra
+# export JETPACK=~/jetson_linux_35.6.4/Linux_for_Tegra
 # export KERNEL_OUT=$JETPACK/../images
 # export KERNEL_MODULES_OUT=$JETPACK/../images/modules
-# export CROSS_COMPILE=~/jetson_linxu_35.6.4/aarch64--glibc--stable-final/bin/aarch64-buildroot-linux-gnu-
+# export CROSS_COMPILE=~/jetson_linux_35.6.4/aarch64--glibc--stable-final/bin/aarch64-buildroot-linux-gnu-
 
 # 编译设备树
 make ARCH=arm64 O=$KERNEL_OUT CROSS_COMPILE=$CROSS_COMPILE -j$(nproc) dtbs
@@ -249,7 +249,7 @@ make ARCH=arm64 O=$KERNEL_OUT CROSS_COMPILE=$CROSS_COMPILE -j$(nproc) dtbs
 - 通常生成的设备树文件位于`Linux_for_Tegra/../images/arch/arm64/boot/dts/nvidia`
 
 ```bash
-cd ~/jetson_linxu_35.6.4/Linux_for_Tegra
+cd ~/jetson_linux_35.6.4/Linux_for_Tegra
 
 ls /../images/arch/arm64/boot/dts/nvidia/
 ```

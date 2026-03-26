@@ -18,8 +18,8 @@
 2. Build the compilation environment
 
 ```bash
-mkdir -p jetson_linxu_35.6.4
-cd jetson_linxu_35.6.4
+mkdir -p jetson_linux_35.6.4
+cd jetson_linux_35.6.4
 
 # Add the files you downloaded into the current directory
 # Be sure to replace `you_download_folder` below with your actual download directory. Do not copy it exactly as-is.
@@ -66,11 +66,11 @@ sudo apt-get install libssl-dev
 
 ```bash
 # Switch to the you_kernel_ws directory
-cd ~/jetson_linxu_35.6.4/Linux_for_Tegra/source/public/kernel/kernel-5.10
+cd ~/jetson_linux_35.6.4/Linux_for_Tegra/source/public/kernel/kernel-5.10
 
 # Be sure to replace `you_kernel_ws` below with your actual download directory. Do not copy it exactly as-is.
 # First, set the JETPACK path
-export JETPACK=~/jetson_linxu_35.6.4/Linux_for_Tegra
+export JETPACK=~/jetson_linux_35.6.4/Linux_for_Tegra
 
 # Then set the output directory (using the JETPACK variable)
 export KERNEL_OUT=$JETPACK/../images
@@ -78,14 +78,14 @@ export KERNEL_MODULES_OUT=$JETPACK/../images/modules
 
 # Verify whether the path is correct
 echo $KERNEL_OUT
-# It should display: ~/jetson_linxu_35.6.4/Linux_for_Tegra/../images
+# It should display: ~/jetson_linux_35.6.4/Linux_for_Tegra/../images
 
 # Create the output directories
 mkdir -p $KERNEL_OUT
 mkdir -p $KERNEL_MODULES_OUT
 
 # Confirm the cross-compiler path
-export CROSS_COMPILE=~/jetson_linxu_35.6.4/aarch64--glibc--stable-final/bin/aarch64-buildroot-linux-gnu-
+export CROSS_COMPILE=~/jetson_linux_35.6.4/aarch64--glibc--stable-final/bin/aarch64-buildroot-linux-gnu-
 
 # Verify the cross-compiler
 ${CROSS_COMPILE}gcc --version
@@ -220,10 +220,10 @@ ${CROSS_COMPILE}gcc --version
 cd ~/you_kernel_ws/Linux_for_Tegra/source/public/kernel/kernel-5.10
 
 # Set all environment variables
-export JETPACK=~/jetson_linxu_35.6.4/Linux_for_Tegra
+export JETPACK=~/jetson_linux_35.6.4/Linux_for_Tegra
 export KERNEL_OUT=$JETPACK/../images
 export KERNEL_MODULES_OUT=$JETPACK/../images/modules
-export CROSS_COMPILE=~/jetson_linxu_35.6.4/aarch64--glibc--stable-final/bin/aarch64-buildroot-linux-gnu-
+export CROSS_COMPILE=~/jetson_linux_35.6.4/aarch64--glibc--stable-final/bin/aarch64-buildroot-linux-gnu-
 
 # Configure the kernel
 make ARCH=arm64 O=$KERNEL_OUT tegra_defconfig
@@ -235,10 +235,10 @@ make ARCH=arm64 O=$KERNEL_OUT tegra_defconfig
 
 ```bash
 # Set all environment variables
-# export JETPACK=~/jetson_linxu_35.6.4/Linux_for_Tegra
+# export JETPACK=~/jetson_linux_35.6.4/Linux_for_Tegra
 # export KERNEL_OUT=$JETPACK/../images
 # export KERNEL_MODULES_OUT=$JETPACK/../images/modules
-# export CROSS_COMPILE=~/jetson_linxu_35.6.4/aarch64--glibc--stable-final/bin/aarch64-buildroot-linux-gnu-
+# export CROSS_COMPILE=~/jetson_linux_35.6.4/aarch64--glibc--stable-final/bin/aarch64-buildroot-linux-gnu-
 
 # Compile the device tree
 make ARCH=arm64 O=$KERNEL_OUT CROSS_COMPILE=$CROSS_COMPILE -j$(nproc) dtbs
@@ -253,7 +253,7 @@ make ARCH=arm64 O=$KERNEL_OUT CROSS_COMPILE=$CROSS_COMPILE -j$(nproc) dtbs
 - The generated device tree file is usually located in `Linux_for_Tegra/../images/arch/arm64/boot/dts/nvidia`
 
 ```bash
-cd ~/jetson_linxu_35.6.4/Linux_for_Tegra
+cd ~/jetson_linux_35.6.4/Linux_for_Tegra
 
 ls ../images/arch/arm64/boot/dts/nvidia/
 ```
