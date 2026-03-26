@@ -44,6 +44,7 @@ orin-board$ tree -L 2
 
 3. 仓库的内容尽可能做中英文两份
 
+***友情链接***
 
 **Jetson Orin NX烧录+设备树更改？看这一篇就够了！：<https://blog.csdn.net/xiongqi123123/article/details/144079706>**
 
