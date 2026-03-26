@@ -47,9 +47,6 @@ orin-board$ tree -L 2
 
 **Jetson Orin NX烧录+设备树更改？看这一篇就够了！：<https://blog.csdn.net/xiongqi123123/article/details/144079706>**
 
-
-替换到orin上`/boot`和`/boot/dtb`下面的文件，重启生效
-
 # 附：
 
 1. P3767-0000这些神秘代码都是什么意思？
