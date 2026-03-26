@@ -7,7 +7,7 @@
 
 > Download link: https://developer.nvidia.com/embedded/jetson-linux-r3564
 
-![device](images/device_tree_20.png "Screenshot")
+![device](../images/device_tree_20.png "Screenshot")
 
 1. Download the BSP source code and the compilation toolchain separately
 
@@ -34,7 +34,7 @@ mkdir -p aarch64--glibc--stable-final
 tar -zxvf aarch64--glibc--stable-final.tar.gz -C aarch64--glibc--stable-final
 ```
 
-![device](images/device_tree_21.png "Screenshot")
+![device](../images/device_tree_21.png "Screenshot")
 
 2. Extract the source code part
 
@@ -73,12 +73,12 @@ cd ~/jetson_linxu_35.6.4/Linux_for_Tegra/source/public/kernel/kernel-5.10
 export JETPACK=~/jetson_linxu_35.6.4/Linux_for_Tegra
 
 # Then set the output directory (using the JETPACK variable)
-export KERNEL_OUT=$JETPACK/images
-export KERNEL_MODULES_OUT=$JETPACK/images/modules
+export KERNEL_OUT=$JETPACK/../images
+export KERNEL_MODULES_OUT=$JETPACK/../images/modules
 
 # Verify whether the path is correct
 echo $KERNEL_OUT
-# It should display: ~/jetson_linxu_35.6.4/Linux_for_Tegra/images
+# It should display: ~/jetson_linxu_35.6.4/Linux_for_Tegra/../images
 
 # Create the output directories
 mkdir -p $KERNEL_OUT
@@ -93,7 +93,7 @@ ${CROSS_COMPILE}gcc --version
 
 *For example:*
 
-![device](images/device_tree_22.png "Screenshot")
+![device](../images/device_tree_22.png "Screenshot")
 
 ### Modify the Device Tree
 
@@ -123,7 +123,7 @@ ${CROSS_COMPILE}gcc --version
 	};
 ```
 
-![device](images/device_tree_23.png "Screenshot")
+![device](../images/device_tree_23.png "Screenshot")
 
 2. Modify the USB 3.0 section
 
@@ -149,7 +149,7 @@ ${CROSS_COMPILE}gcc --version
 			};
 ```
 
-![device](images/device_tree_24.png "Screenshot")
+![device](../images/device_tree_24.png "Screenshot")
 
 - Under `xusb_padctl: xusb_padctl@3520000 --> ports`, add the `usb3-2` section to activate the third USB 3.0 port
 
@@ -191,7 +191,7 @@ ${CROSS_COMPILE}gcc --version
 		};
 ```
 
-![device](images/device_tree_25.png "Screenshot")
+![device](../images/device_tree_25.png "Screenshot")
 
 - Connect the newly enabled hardware channel to the USB controller
 
@@ -203,62 +203,62 @@ ${CROSS_COMPILE}gcc --version
 			<&{/xusb_padctl@3520000/pads/usb2/lanes/usb2-2}>,
 			<&{/xusb_padctl@3520000/pads/usb3/lanes/usb3-0}>,
 			<&{/xusb_padctl@3520000/pads/usb3/lanes/usb3-1}>,
-			<&{/xusb_padctl@3520000/pads/usb3/lanes/usb3-1}>;		// Add this line to mount usb3-2 onto the USB 3.0 bus
+			<&{/xusb_padctl@3520000/pads/usb3/lanes/usb3-2}>;		// Add this line to mount usb3-2 onto the USB 3.0 bus
 		phy-names = "usb2-0", "usb2-1", "usb2-2", "usb3-0", "usb3-1", "usb3-2";		// Add usb3-2 and label usb3-2 on the bus for internal driver use
 		nvidia,xusb-padctl = <&xusb_padctl>;
 	};
 ```
 
-![device](images/device_tree_26.png "Screenshot")
+![device](../images/device_tree_26.png "Screenshot")
 
 ### Compile the Kernel and Device Tree
 
 1. Compile the kernel
 
 ```bash
-# Enter Linux_for_Tegra/source
-cd ~/you_kernel_ws/Linux_for_Tegra/source
+# Enter Linux_for_Tegra/source/public/kernel/kernel-5.10
+cd ~/you_kernel_ws/Linux_for_Tegra/source/public/kernel/kernel-5.10
 
 # Set all environment variables
-export JETPACK=/home/cc/sata/orin_sdk/jetson_linxu_35.6.4/Linux_for_Tegra
-export KERNEL_OUT=$JETPACK/images
-export KERNEL_MODULES_OUT=$JETPACK/images/modules
-export CROSS_COMPILE=/home/cc/sata/orin_sdk/jetson_linxu_35.6.4/aarch64--glibc--stable-final/bin/aarch64-buildroot-linux-gnu-
+export JETPACK=~/jetson_linxu_35.6.4/Linux_for_Tegra
+export KERNEL_OUT=$JETPACK/../images
+export KERNEL_MODULES_OUT=$JETPACK/../images/modules
+export CROSS_COMPILE=~/jetson_linxu_35.6.4/aarch64--glibc--stable-final/bin/aarch64-buildroot-linux-gnu-
 
 # Configure the kernel
 make ARCH=arm64 O=$KERNEL_OUT tegra_defconfig
 ```
 
-![device](images/device_tree_27.png "This means the kernel is being compiled")
+![device](../images/device_tree_27.png "This means the kernel is being compiled")
 
 2. Compile the device tree
 
 ```bash
 # Set all environment variables
-# export JETPACK=/home/cc/sata/orin_sdk/jetson_linxu_35.6.4/Linux_for_Tegra
-# export KERNEL_OUT=$JETPACK/images
-# export KERNEL_MODULES_OUT=$JETPACK/images/modules
-# export CROSS_COMPILE=/home/cc/sata/orin_sdk/jetson_linxu_35.6.4/aarch64--glibc--stable-final/bin/aarch64-buildroot-linux-gnu-
+# export JETPACK=~/jetson_linxu_35.6.4/Linux_for_Tegra
+# export KERNEL_OUT=$JETPACK/../images
+# export KERNEL_MODULES_OUT=$JETPACK/../images/modules
+# export CROSS_COMPILE=~/jetson_linxu_35.6.4/aarch64--glibc--stable-final/bin/aarch64-buildroot-linux-gnu-
 
 # Compile the device tree
 make ARCH=arm64 O=$KERNEL_OUT CROSS_COMPILE=$CROSS_COMPILE -j$(nproc) dtbs
 ```
 
-![device](images/device_tree_28.png "Press Enter to compile the device tree")
+![device](../images/device_tree_28.png "Press Enter to compile the device tree")
 
-![device](images/device_tree_29.png "The device tree compilation is now complete")
+![device](../images/device_tree_29.png "The device tree compilation is now complete")
 
 4. Check the generated device tree file
 
-- The generated device tree file is usually located in `Linux_for_Tegra/images/arch/arm64/boot/dts/nvidia`
+- The generated device tree file is usually located in `Linux_for_Tegra/../images/arch/arm64/boot/dts/nvidia`
 
 ```bash
 cd ~/jetson_linxu_35.6.4/Linux_for_Tegra
 
-ls Linux_for_Tegra/images/arch/arm64/boot/dts/nvidia/
+ls ../images/arch/arm64/boot/dts/nvidia/
 ```
 
-![device](images/device_tree_30.png "Screenshot")
+![device](../images/device_tree_30.png "Screenshot")
 
 ### Replace the Device Tree on the Board and Make the Bootloader Load It When Booting the Kernel
 

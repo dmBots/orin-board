@@ -7,7 +7,7 @@
 
 > 下载链接:https://developer.nvidia.com/embedded/jetson-linux-r3564
 
-![device](images/device_tree_20.png "截图")
+![device](../images/device_tree_20.png "截图")
 
 1. 分别下载BSP源码和编译工具链
 
@@ -34,7 +34,7 @@ mkdir -p aarch64--glibc--stable-final
 tar -zxvf aarch64--glibc--stable-final.tar.gz -C aarch64--glibc--stable-final
 ```
 
-![device](images/device_tree_21.png "截图")
+![device](../images/device_tree_21.png "截图")
 
 
 2. 解压缩源码部分
@@ -74,12 +74,12 @@ cd ~/jetson_linxu_35.6.4/Linux_for_Tegra/source/public/kernel/kernel-5.10
 export JETPACK=~/jetson_linxu_35.6.4/Linux_for_Tegra
 
 # 然后设置输出目录（使用 JETPACK 变量）
-export KERNEL_OUT=$JETPACK/images
-export KERNEL_MODULES_OUT=$JETPACK/images/modules
+export KERNEL_OUT=$JETPACK/../images
+export KERNEL_MODULES_OUT=$JETPACK/../images/modules
 
 # 验证路径是否正确
 echo $KERNEL_OUT
-# 应该显示: ~/jetson_linxu_35.6.4/Linux_for_Tegra/images
+# 应该显示: ~/jetson_linxu_35.6.4/Linux_for_Tegra/../images
 
 # 创建输出目录
 mkdir -p $KERNEL_OUT
@@ -94,7 +94,7 @@ ${CROSS_COMPILE}gcc --version
 
 *例如：*
 
-![device](images/device_tree_22.png "截图")
+![device](../images/device_tree_22.png "截图")
 
 
 ### 修改设备树
@@ -123,10 +123,11 @@ ${CROSS_COMPILE}gcc --version
 	};
 ```
 
-![device](images/device_tree_23.png "截图")
+![device](../images/device_tree_23.png "截图")
 
 
 2. 修改USB3.0部分
+	**在`you_kernel_ws/Linux_for_Tegra/source/public/hardware/nvidia/platform/t23x/p3768/kernel-dts/cvb/tegra234-p3768-0000-a0.dtsi`中修改以下部分**	
 
 - 在`xusb_padctl: xusb_padctl@3520000 --> pads --> usb3 --> lanes`下添加 `usb3-2`部分，添加第三个 USB 3.0的通道配置
 ```c
@@ -149,7 +150,7 @@ ${CROSS_COMPILE}gcc --version
 			};
 ```
 
-![device](images/device_tree_24.png "截图")
+![device](../images/device_tree_24.png "截图")
 
 - 在`xusb_padctl: xusb_padctl@3520000 --> ports`下添加 `usb3-2`部分，激活第三个 USB 3.0 端口
 
@@ -191,7 +192,7 @@ ${CROSS_COMPILE}gcc --version
 		};
 ```
 
-![device](images/device_tree_25.png "截图")
+![device](../images/device_tree_25.png "截图")
 
 - 将添加启用的硬件通道连接到USB控制器
 
@@ -203,56 +204,56 @@ ${CROSS_COMPILE}gcc --version
 			<&{/xusb_padctl@3520000/pads/usb2/lanes/usb2-2}>,
 			<&{/xusb_padctl@3520000/pads/usb3/lanes/usb3-0}>,
 			<&{/xusb_padctl@3520000/pads/usb3/lanes/usb3-1}>,
-			<&{/xusb_padctl@3520000/pads/usb3/lanes/usb3-1}>;		//添加这一行将将 usb3-2 挂载到 usb3.0 总线上
+			<&{/xusb_padctl@3520000/pads/usb3/lanes/usb3-2}>;		//添加这一行将将 usb3-2 挂载到 usb3.0 总线上
 		phy-names = "usb2-0", "usb2-1", "usb2-2", "usb3-0", "usb3-1", "usb3-2";		// 添加 usb3-2 将usb3-2 在总线上标记为 usb3-2 供驱动内部使用
 		nvidia,xusb-padctl = <&xusb_padctl>;
 	};
 ```
-![device](images/device_tree_26.png "截图")
+![device](../images/device_tree_26.png "截图")
 
 ### 编译内核与设备数
 
 1. 编译内核
 ```bash
-# 进入Linux_for_Tegra/source
-cd ~/you_kernel_ws/Linux_for_Tegra/source
+# 进入Linux_for_Tegra/source/public/kernel/kernel-5.10
+cd ~/you_kernel_ws/Linux_for_Tegra/source/public/kernel/kernel-5.10
 
 # 设置所有环境变量
-export JETPACK=/home/cc/sata/orin_sdk/jetson_linxu_35.6.4/Linux_for_Tegra
-export KERNEL_OUT=$JETPACK/images
-export KERNEL_MODULES_OUT=$JETPACK/images/modules
-export CROSS_COMPILE=/home/cc/sata/orin_sdk/jetson_linxu_35.6.4/aarch64--glibc--stable-final/bin/aarch64-buildroot-linux-gnu-
+export JETPACK=~/jetson_linxu_35.6.4/Linux_for_Tegra
+export KERNEL_OUT=$JETPACK/../images
+export KERNEL_MODULES_OUT=$JETPACK/../images/modules
+export CROSS_COMPILE=~/jetson_linxu_35.6.4/aarch64--glibc--stable-final/bin/aarch64-buildroot-linux-gnu-
 
 # 配置内核
 make ARCH=arm64 O=$KERNEL_OUT tegra_defconfig
 ```
-![device](images/device_tree_27.png "像这样就是在编译内核了")
+![device](../images/device_tree_27.png "像这样就是在编译内核了")
 
 2. 编译设备树
 ```bash
 # 设置所有环境变量
-# export JETPACK=/home/cc/sata/orin_sdk/jetson_linxu_35.6.4/Linux_for_Tegra
-# export KERNEL_OUT=$JETPACK/images
-# export KERNEL_MODULES_OUT=$JETPACK/images/modules
-# export CROSS_COMPILE=/home/cc/sata/orin_sdk/jetson_linxu_35.6.4/aarch64--glibc--stable-final/bin/aarch64-buildroot-linux-gnu-
+# export JETPACK=~/jetson_linxu_35.6.4/Linux_for_Tegra
+# export KERNEL_OUT=$JETPACK/../images
+# export KERNEL_MODULES_OUT=$JETPACK/../images/modules
+# export CROSS_COMPILE=~/jetson_linxu_35.6.4/aarch64--glibc--stable-final/bin/aarch64-buildroot-linux-gnu-
 
 # 编译设备树
 make ARCH=arm64 O=$KERNEL_OUT CROSS_COMPILE=$CROSS_COMPILE -j$(nproc) dtbs
 ```
 
-![device](images/device_tree_28.png "回车后即可编译设备树")
+![device](../images/device_tree_28.png "回车后即可编译设备树")
 
-![device](images/device_tree_29.png "这样设备树就编译完成了")
+![device](../images/device_tree_29.png "这样设备树就编译完成了")
 
 4. 检查生成的设备树文件
-- 通常生成的设备树文件位于`Linux_for_Tegra/images/arch/arm64/boot/dts/nvidia`
+- 通常生成的设备树文件位于`Linux_for_Tegra/../images/arch/arm64/boot/dts/nvidia`
 
 ```bash
 cd ~/jetson_linxu_35.6.4/Linux_for_Tegra
 
-ls Linux_for_Tegra/images/arch/arm64/boot/dts/nvidia/
+ls /../images/arch/arm64/boot/dts/nvidia/
 ```
-![device](images/device_tree_30.png "截图")
+![device](../images/device_tree_30.png "截图")
 
 
 
@@ -261,12 +262,15 @@ ls Linux_for_Tegra/images/arch/arm64/boot/dts/nvidia/
 1. 为Jetson Orin板卡替换设备树
 - 在X86主机上将生成的`.dtb`文件上传到Jetson Orin板卡上
 ```bash
+# 使用 ssh 发送设备树文件到Orin板卡上
 scp -r ~/you_kernel_ws/tegra234-p3767-0004-p3768-0000-a0.dtb ssh ubuntu@example.com：~/
 ```
 
 - 在Orin板卡上将得到的文件复制到`/boot/dtb/`下
 ```bash
 sudo cp -r ~/tegra234-p3767-0004-p3768-0000-a0.dtb /boot/dtb/
+ls /boot/dtb/
+
 ```
 
 2. 手动指定引导加载程序（U-Boot）在启动内核时使用的设备树文件（.dtb）的路径

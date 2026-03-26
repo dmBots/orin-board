@@ -7,7 +7,7 @@
 
 > Download link: https://developer.nvidia.com/embedded/jetson-linux-r3640
 
-![device](images/device_tree_0.png "Screenshot")
+![device](../images/device_tree_0.png "Screenshot")
 
 1. Download the BSP source code and the compilation toolchain separately.
 
@@ -29,8 +29,8 @@ cp -r ~/you_download_folder/aarch64--glibc--stable-2022.08-1.tar.bz2 .
 tar -xjvf public_sources.tbz2
 tar -xjvf aarch64--glibc--stable-2022.08-1.tar.bz2
 
-![device](images/device_tree_1.png "Screenshot")
-![device](images/device_tree_2.png "Screenshot")
+![device](../images/device_tree_1.png "Screenshot")
+![device](../images/device_tree_2.png "Screenshot")
 
 3. Extract the source code part
 
@@ -78,7 +78,7 @@ export CROSS_COMPILE=~/you_kernel_ws/aarch64--glibc--stable-2022.08-1/bin/aarch6
 ```
 
 *Example:*
-![device](images/device_tree_3.png "Screenshot")
+![device](../images/device_tree_3.png "Screenshot")
 
 ### Modify the Device Tree
 1. Modify the UART section
@@ -98,7 +98,7 @@ export CROSS_COMPILE=~/you_kernel_ws/aarch64--glibc--stable-2022.08-1/bin/aarch6
 		serial3 = "/bus@0/serial@3110000";		// This line maps the UART corresponding to 3110000 to ttyTHS3
 	};
 ```
-![device](images/device_tree_4.png "Screenshot")
+![device](../images/device_tree_4.png "Screenshot")
 
 - Add the`serial@3110000`section after the `serial@31d0000` node and enable the UART
 ```c
@@ -113,7 +113,7 @@ serial@31d0000 {
 		};
 ```
 
-![device](images/device_tree_5.png "Screenshot")
+![device](../images/device_tree_5.png "Screenshot")
 
 
 2. Modify the USB3.0 section
@@ -141,7 +141,7 @@ usb3 {
 				};
 ```
 
-![device](images/device_tree_6.png "Screenshot")
+![device](../images/device_tree_6.png "Screenshot")
 
 - Under`padctl@3520000 --> ports`, add the `usb3-2`part to activate the third USB 3.0 port
 
@@ -189,7 +189,7 @@ usb3 {
 			};
 ```
 
-![device](images/device_tree_7.png "Screenshot")
+![device](../images/device_tree_7.png "Screenshot")
 
 - Connect the added enabled hardware lanes to the USB controller
 
@@ -206,7 +206,7 @@ usb3 {
 			phy-names = "usb2-0", "usb2-1", "usb2-2", "usb3-0","usb3-1","usb3-2";		// Add usb3-2 to mark it on the bus for internal driver use
 		};
 ```
-![device](images/device_tree_8.png "Screenshot")
+![device](../images/device_tree_8.png "Screenshot")
 
 ### Compile the Kernel and Device Tree
 
@@ -221,7 +221,7 @@ export CROSS_COMPILE=~/you_kernel_ws/aarch64--glibc--stable-2022.08-1/bin/aarch6
 make -C kernel
 
 ```
-![device](images/device_tree_9.png "This is just the process of compiling the kernel！")
+![device](../images/device_tree_9.png "This is just the process of compiling the kernel！")
 
 2. Compile modules
 
@@ -236,7 +236,7 @@ export KERNEL_HEADERS=~/you_kernel_ws/Linux_for_Tegra/source/kernel/kernel-jammy
 make modules
 ```
 
-![device](images/device_tree_10.png "This is exactly the compilation module")
+![device](../images/device_tree_10.png "This is exactly the compilation module")
 
 
 3. Compile the device tree
@@ -251,14 +251,14 @@ export KERNEL_HEADERS=~/you_kernel_ws/Linux_for_Tegra/source/kernel/kernel-jammy
 make dtbs
 ```
 
-![device](images/device_tree_11.png "After pressing the Enter key, the device tree can be compiled")
+![device](../images/device_tree_11.png "After pressing the Enter key, the device tree can be compiled")
 
-![device](images/device_tree_12.png "Then the device tree has been compiled successfully")
+![device](../images/device_tree_12.png "Then the device tree has been compiled successfully")
 
 4. Check the generated device tree file
 - Typically, the generated device tree file is located in `Linux_for_Tegra/source/kernel-devicetree/generic-dts/dtbs`
 
-![device](images/device_tree_13.png "Screenshot")
+![device](../images/device_tree_13.png "Screenshot")
 ```bash
 cd ~/you_kernel_ws
 

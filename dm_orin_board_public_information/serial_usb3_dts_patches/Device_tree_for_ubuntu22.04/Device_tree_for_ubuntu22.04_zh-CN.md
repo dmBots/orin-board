@@ -7,7 +7,7 @@
 
 > 下载链接:https://developer.nvidia.com/embedded/jetson-linux-r3640
 
-![device](images/device_tree_0.png "截图")
+![device](../images/device_tree_0.png "截图")
 
 1. 分别下载BSP源码和编译工具链
 
@@ -31,8 +31,8 @@ tar -xjvf public_sources.tbz2
 tar -xjvf aarch64--glibc--stable-2022.08-1.tar.bz2
 ```
 
-![device](images/device_tree_1.png "截图")
-![device](images/device_tree_2.png "截图")
+![device](../images/device_tree_1.png "截图")
+![device](../images/device_tree_2.png "截图")
 
 3. 解压缩源码部分
 
@@ -79,7 +79,7 @@ export CROSS_COMPILE_AARCH64_PATH=export CROSS_COMPILE=~/you_kernel_ws/aarch64--
 ```
 
 *例如：*
-![device](images/device_tree_3.png "截图")
+![device](../images/device_tree_3.png "截图")
 
 ### 修改设备树
 1. 修改串口部分
@@ -99,7 +99,7 @@ export CROSS_COMPILE_AARCH64_PATH=export CROSS_COMPILE=~/you_kernel_ws/aarch64--
 		serial3 = "/bus@0/serial@3110000";		// 这一行，目的是把3110000对应的串口，映射到ttyTHS3
 	};
 ```
-![device](images/device_tree_4.png "截图")
+![device](../images/device_tree_4.png "截图")
 
 - 在`serial@31d0000`节点后面添加 `serial@3110000` 部分并使能串口
 ```c
@@ -114,7 +114,7 @@ serial@31d0000 {
 		};
 ```
 
-![device](images/device_tree_5.png "截图")
+![device](../images/device_tree_5.png "截图")
 
 
 2. 修改USB3.0部分
@@ -142,7 +142,7 @@ usb3 {
 				};
 ```
 
-![device](images/device_tree_6.png "截图")
+![device](../images/device_tree_6.png "截图")
 
 - 在`padctl@3520000 --> ports`下添加 `usb3-2`部分，激活第三个 USB 3.0 端口
 
@@ -190,7 +190,7 @@ usb3 {
 			};
 ```
 
-![device](images/device_tree_7.png "截图")
+![device](../images/device_tree_7.png "截图")
 
 - 将添加启用的硬件通道连接到USB控制器
 
@@ -207,7 +207,7 @@ usb3 {
 			phy-names = "usb2-0", "usb2-1", "usb2-2", "usb3-0","usb3-1","usb3-2";		// 添加 usb3-2 将usb3-2 在总线上标记为 usb3-2 供驱动内部使用
 		};
 ```
-![device](images/device_tree_8.png "截图")
+![device](../images/device_tree_8.png "截图")
 
 ### 编译内核与设备树
 
@@ -222,7 +222,7 @@ export CROSS_COMPILE=~/you_kernel_ws/aarch64--glibc--stable-2022.08-1/bin/aarch6
 make -C kernel
 
 ```
-![device](images/device_tree_9.png "像这样就是在编译内核了")
+![device](../images/device_tree_9.png "像这样就是在编译内核了")
 
 2. 编译模块
 
@@ -237,7 +237,7 @@ export KERNEL_HEADERS=~/you_kernel_ws/Linux_for_Tegra/source/kernel/kernel-jammy
 make modules
 ```
 
-![device](images/device_tree_10.png "像这样就是在编译模块了")
+![device](../images/device_tree_10.png "像这样就是在编译模块了")
 
 
 3. 编译设备树
@@ -252,14 +252,14 @@ export KERNEL_HEADERS=~/you_kernel_ws/Linux_for_Tegra/source/kernel/kernel-jammy
 make dtbs
 ```
 
-![device](images/device_tree_11.png "回车后即可编译设备树")
+![device](../images/device_tree_11.png "回车后即可编译设备树")
 
-![device](images/device_tree_12.png "这样设备树就编译完成了")
+![device](../images/device_tree_12.png "这样设备树就编译完成了")
 
 4. 检查生成的设备树文件
 - 通常生成的设备树文件位于`Linux_for_Tegra/source/kernel-devicetree/generic-dts/dtbs`
 
-![device](images/device_tree_13.png "截图")
+![device](../images/device_tree_13.png "截图")
 ```bash
 cd ~/you_kernel_ws
 
