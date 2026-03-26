@@ -5,7 +5,7 @@
 
 ### Download Nvidia Jetson Source Code
 
-> Download link: https://developer.nvidia.com/embedded/jetson-linux-r3640
+> Download link: https://developer.nvidia.com/embedded/jetson-linux-r365
 
 ![device](../images/device_tree_0.png "Screenshot")
 

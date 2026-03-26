@@ -5,7 +5,7 @@
 
 ### 下载Nvidia Jetson源码
 
-> 下载链接:https://developer.nvidia.com/embedded/jetson-linux-r3640
+> 下载链接:https://developer.nvidia.com/embedded/jetson-linux-r365
 
 ![device](../images/device_tree_0.png "截图")
 
