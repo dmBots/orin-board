@@ -17,8 +17,8 @@
 2. Set up the compilation environment
 
 ```bash
-mkdir -p nvidia_devicetree
-cd nvidia_devicetree
+mkdir -p jetson_linux_36.5
+cd jetson_linux_36.5
 
 # Add your downloaded files to the current directory
 # Be sure to replace `you_download_folder` with your actual download directory; do not copy this exactly
@@ -35,7 +35,7 @@ tar -xjvf aarch64--glibc--stable-2022.08-1.tar.bz2
 3. Extract the source code part
 
 ```bash
-cd you_kernel_ws/Linux_for_Tegra/source
+cd jetson_linux_36.5/Linux_for_Tegra/source
 
 # Extract the following three main components; all are crucial and indispensable
 tar -xjvf kernel_src.tbz2
@@ -65,12 +65,12 @@ sudo apt-get install libssl-dev
 
 2. Add the compilation toolchain link in the current terminal
 ```bash
-# Change directory to you_kernel_ws
-cd ~/you_kernel_ws/Linux_for_Tegra/source
+# Change directory to jetson_linux_36.5
+cd ~/jetson_linux_36.5/Linux_for_Tegra/source
 
-# Be sure to replace `you_kernel_ws` with your actual working directory; do not copy this exactly
-export CROSS_COMPILE_AARCH64_PATH=~/you_kernel_ws/aarch64--glibc--stable-2022.08-1
-export CROSS_COMPILE=~/you_kernel_ws/aarch64--glibc--stable-2022.08-1/bin/aarch64-buildroot-linux-gnu-
+# Be sure to replace `jetson_linux_36.5` with your actual working directory; do not copy this exactly
+export CROSS_COMPILE_AARCH64_PATH=~/jetson_linux_36.5/aarch64--glibc--stable-2022.08-1
+export CROSS_COMPILE=~/jetson_linux_36.5/aarch64--glibc--stable-2022.08-1/bin/aarch64-buildroot-linux-gnu-
 ```
 3. Set the build script for real-time configuration
 ```bash
@@ -83,7 +83,7 @@ export CROSS_COMPILE=~/you_kernel_ws/aarch64--glibc--stable-2022.08-1/bin/aarch6
 ### Modify the Device Tree
 1. Modify the UART section
 
-    **In`you_kernel_ws/Linux_for_Tegra/source/hardware/nvidia/t23x/nv-public/tegra234-p3768-0000.dtsi`,modify the following sections**
+    **In`jetson_linux_36.5/Linux_for_Tegra/source/hardware/nvidia/t23x/nv-public/nv-platform/tegra234-p3971-0000+p3701-xxxx-nv-common.dtsi`,modify the following sections**
 
 - Add the mapping for`serial3`in the`aliases`node
 ```c
@@ -93,6 +93,7 @@ export CROSS_COMPILE=~/you_kernel_ws/aarch64--glibc--stable-2022.08-1/bin/aarch6
 		// serial2 = &tcu;
 		
 		/* Add the following three lines to remap the UARTs */
+		serial0 = &tcu;
 		serial1 = &uarta;
 		serial2 = &uarte;
 		serial3 = "/bus@0/serial@3110000";		// This line maps the UART corresponding to 3110000 to ttyTHS3
@@ -102,13 +103,16 @@ export CROSS_COMPILE=~/you_kernel_ws/aarch64--glibc--stable-2022.08-1/bin/aarch6
 
 - Add the`serial@3110000`section after the `serial@31d0000` node and enable the UART
 ```c
-serial@31d0000 {
-			current-speed = <115200>;
+		serial@3100000 {
+			compatible = "nvidia,tegra194-hsuart";
+			reset-names = "serial";
 			status = "okay";
 		};
 
 		/* Add UART1 corresponding to physical UART0 on the carrier board */
 		serial@3110000 {/* Enable UART1 */
+			compatible = "nvidia,tegra194-hsuart";
+			reset-names = "serial";
 			status = "okay";
 		};
 ```
@@ -117,6 +121,8 @@ serial@31d0000 {
 
 
 2. Modify the USB3.0 section
+
+	**In`jetson_linux_36.5/Linux_for_Tegra/source/hardware/nvidia/t23x/nv-public/tegra234-p3768-0000+p3767.dtsi`,modify the following sections**
 
 - Under`padctl@3520000 --> usb3 --> lanes`, add the `usb3-2`part to configure the third USB 3.0 lane
 ```c
@@ -213,10 +219,10 @@ usb3 {
 1. Compile the kernel
 ```bash
 # Enter Linux_for_Tegra/source
-cd ~/you_kernel_ws/Linux_for_Tegra/source
+cd ~/jetson_linux_36.5/Linux_for_Tegra/source
 # Set environment variables
-export CROSS_COMPILE_AARCH64_PATH=~/you_kernel_ws/aarch64--glibc--stable-2022.08-1
-export CROSS_COMPILE=~/you_kernel_ws/aarch64--glibc--stable-2022.08-1/bin/aarch64-buildroot-linux-gnu-
+export CROSS_COMPILE_AARCH64_PATH=~/jetson_linux_36.5/aarch64--glibc--stable-2022.08-1
+export CROSS_COMPILE=~/jetson_linux_36.5/aarch64--glibc--stable-2022.08-1/bin/aarch64-buildroot-linux-gnu-
 
 make -C kernel
 
@@ -227,10 +233,10 @@ make -C kernel
 
 ```bash
 # Set environment variables
-# export CROSS_COMPILE_AARCH64_PATH=~/you_kernel_ws/aarch64--glibc--stable-2022.08-1
-# export CROSS_COMPILE=~/you_kernel_ws/aarch64--glibc--stable-2022.08-1/bin/aarch64-buildroot-linux-gnu-
+# export CROSS_COMPILE_AARCH64_PATH=~/jetson_linux_36.5/aarch64--glibc--stable-2022.08-1
+# export CROSS_COMPILE=~/jetson_linux_36.5/aarch64--glibc--stable-2022.08-1/bin/aarch64-buildroot-linux-gnu-
 export IGNORE_PREEMPT_RT_PRESENCE=1
-export KERNEL_HEADERS=~/you_kernel_ws/Linux_for_Tegra/source/kernel/kernel-jammy-src/
+export KERNEL_HEADERS=~/jetson_linux_36.5/Linux_for_Tegra/source/kernel/kernel-jammy-src/
 
 # Compile modules
 make modules
@@ -242,10 +248,10 @@ make modules
 3. Compile the device tree
 ```bash
 # Set environment variables
-# export CROSS_COMPILE_AARCH64_PATH=~/you_kernel_ws/aarch64--glibc--stable-2022.08-1
-# export CROSS_COMPILE=~/you_kernel_ws/aarch64--glibc--stable-2022.08-1/bin/aarch64-buildroot-linux-gnu-
+# export CROSS_COMPILE_AARCH64_PATH=~/jetson_linux_36.5/aarch64--glibc--stable-2022.08-1
+# export CROSS_COMPILE=~/jetson_linux_36.5/aarch64--glibc--stable-2022.08-1/bin/aarch64-buildroot-linux-gnu-
 export IGNORE_PREEMPT_RT_PRESENCE=1
-export KERNEL_HEADERS=~/you_kernel_ws/Linux_for_Tegra/source/kernel/kernel-jammy-src/
+export KERNEL_HEADERS=~/jetson_linux_36.5/Linux_for_Tegra/source/kernel/kernel-jammy-src/
 
 # Compile device tree
 make dtbs
@@ -260,7 +266,7 @@ make dtbs
 
 ![device](../images/device_tree_13.png "Screenshot")
 ```bash
-cd ~/you_kernel_ws
+cd ~/jetson_linux_36.5
 
 ll Linux_for_Tegra/source/kernel-devicetree/generic-dts/dtbs/
 ```
@@ -273,7 +279,7 @@ ll Linux_for_Tegra/source/kernel-devicetree/generic-dts/dtbs/
 - Upload the generated`.dtb`file to the Jetson Orin board
 
 ```bash
-scp -r ~/you_kernel_ws/tegra234-p3768-0000+p3767-0000-nv.dtb ssh ubuntu@example.com：~/
+scp -r ~/jetson_linux_36.5/tegra234-p3768-0000+p3767-0000-nv.dtb ssh ubuntu@example.com：~/
 ```
 
 - On the Orin board, copy the obtained file to`/boot/dtb/`

@@ -18,8 +18,8 @@
 2. 构建编译环境
 
 ```bash
-mkdir -p nvidia_devicetree
-cd nvidia_devicetree
+mkdir -p jetson_linux_36.5
+cd jetson_linux_36.5
 
 # 将你下载的文件添加到当前目录里
 # 一定要将下面的`you_download_folder`你的实际下载目录，请不要完全照抄
@@ -37,7 +37,7 @@ tar -xjvf aarch64--glibc--stable-2022.08-1.tar.bz2
 3. 解压缩源码部分
 
 ```bash
-cd you_kernel_ws/Linux_for_Tegra/source
+cd jetson_linux_36.5/Linux_for_Tegra/source
 
 # 可解压下面的三个主要组件，很重要缺一不可
 tar -xjvf kernel_src.tbz2
@@ -66,12 +66,12 @@ sudo apt install tegra-21x-dt
 
 2. 在当前终端添加编译工具链接
 ```bash
-# 切换目录到you_kernel_ws
-cd ~/you_kernel_ws/Linux_for_Tegra/source
+# 切换目录到jetson_linux_36.5
+cd ~/jetson_linux_36.5/Linux_for_Tegra/source
 
-# 一定要将下面的`you_kernel_ws`你的实际下载目录，请不要完全照抄
-export CROSS_COMPILE_AARCH64_PATH=~/you_kernel_ws/aarch64--glibc--stable-2022.08-1
-export CROSS_COMPILE_AARCH64_PATH=export CROSS_COMPILE=~/you_kernel_ws/aarch64--glibc--stable-2022.08-1/bin/aarch64-buildroot-linux-gnu-
+# 一定要将下面的`jetson_linux_36.5`你的实际下载目录，请不要完全照抄
+export CROSS_COMPILE_AARCH64_PATH=~/jetson_linux_36.5/aarch64--glibc--stable-2022.08-1
+export CROSS_COMPILE_AARCH64_PATH=export CROSS_COMPILE=~/jetson_linux_36.5/aarch64--glibc--stable-2022.08-1/bin/aarch64-buildroot-linux-gnu-
 ```
 3. 设置构建脚本为实时配置
 ```bash
@@ -84,16 +84,17 @@ export CROSS_COMPILE_AARCH64_PATH=export CROSS_COMPILE=~/you_kernel_ws/aarch64--
 ### 修改设备树
 1. 修改串口部分
 
-    **在`you_kernel_ws/Linux_for_Tegra/source/hardware/nvidia/t23x/nv-public/tegra234-p3768-0000.dtsi`中修改以下部分**
+    **在`jetson_linux_36.5/Linux_for_Tegra/source/hardware/nvidia/t23x/nv-public/nv-platform/tegra234-p3971-0000+p3701-xxxx-nv-common.dtsi`中修改以下部分**
 
 - 在`aliases`节点中添加`serial3`的映射
 ```c
 	aliases {
 		// serial0 = &tcu;
-		// serial1 = &tcu;
-		// serial2 = &tcu;
-		
+		// serial1 = &uarta;
+		// serial2 = &uarta;
+
 		/* 添加下面三行，重新映射串口*/
+		serial0 = &tcu;
 		serial1 = &uarta;
 		serial2 = &uarte;
 		serial3 = "/bus@0/serial@3110000";		// 这一行，目的是把3110000对应的串口，映射到ttyTHS3
@@ -101,15 +102,18 @@ export CROSS_COMPILE_AARCH64_PATH=export CROSS_COMPILE=~/you_kernel_ws/aarch64--
 ```
 ![device](../images/device_tree_4.png "截图")
 
-- 在`serial@31d0000`节点后面添加 `serial@3110000` 部分并使能串口
+- 在`serial@3100000`节点后面添加 `serial@3110000` 部分并使能串口
 ```c
-serial@31d0000 {
-			current-speed = <115200>;
+		serial@3100000 {
+			compatible = "nvidia,tegra194-hsuart";
+			reset-names = "serial";
 			status = "okay";
 		};
-
-		/* 添加串口 UART1 对应 载板物理编号 UART0 */
+		
+		/* 添加串口 UART3 对应 载板物理编号 UART0 */
 		serial@3110000 {/* Enable UART1 */
+			compatible = "nvidia,tegra194-hsuart";
+			reset-names = "serial";
 			status = "okay";
 		};
 ```
@@ -118,6 +122,8 @@ serial@31d0000 {
 
 
 2. 修改USB3.0部分
+
+    **在`jetson_linux_36.5/Linux_for_Tegra/source/hardware/nvidia/t23x/nv-public/tegra234-p3768-0000+p3767.dtsi`中修改以下部分**
 
 - 在`padctl@3520000 --> usb3 --> lanes`下添加 `usb3-2`部分，添加第三个 USB 3.0的通道配置
 ```c
@@ -214,10 +220,10 @@ usb3 {
 1. 编译内核
 ```bash
 # 进入Linux_for_Tegra/source
-cd ~/you_kernel_ws/Linux_for_Tegra/source
+cd ~/jetson_linux_36.5/Linux_for_Tegra/source
 # 设置环境变量
-export CROSS_COMPILE_AARCH64_PATH=~/you_kernel_ws/aarch64--glibc--stable-2022.08-1
-export CROSS_COMPILE=~/you_kernel_ws/aarch64--glibc--stable-2022.08-1/bin/aarch64-buildroot-linux-gnu-
+export CROSS_COMPILE_AARCH64_PATH=~/jetson_linux_36.5/aarch64--glibc--stable-2022.08-1
+export CROSS_COMPILE=~/jetson_linux_36.5/aarch64--glibc--stable-2022.08-1/bin/aarch64-buildroot-linux-gnu-
 
 make -C kernel
 
@@ -228,10 +234,10 @@ make -C kernel
 
 ```bash
 # 设置环境变量
-# export CROSS_COMPILE_AARCH64_PATH=~/you_kernel_ws/aarch64--glibc--stable-2022.08-1
-# export CROSS_COMPILE=~/you_kernel_ws/aarch64--glibc--stable-2022.08-1/bin/aarch64-buildroot-linux-gnu-
+# export CROSS_COMPILE_AARCH64_PATH=~/jetson_linux_36.5/aarch64--glibc--stable-2022.08-1
+# export CROSS_COMPILE=~/jetson_linux_36.5/aarch64--glibc--stable-2022.08-1/bin/aarch64-buildroot-linux-gnu-
 export IGNORE_PREEMPT_RT_PRESENCE=1
-export KERNEL_HEADERS=~/you_kernel_ws/Linux_for_Tegra/source/kernel/kernel-jammy-src/
+export KERNEL_HEADERS=~/jetson_linux_36.5/Linux_for_Tegra/source/kernel/kernel-jammy-src/
 
 # 编译模块
 make modules
@@ -243,10 +249,10 @@ make modules
 3. 编译设备树
 ```bash
 # 设置环境变量
-# export CROSS_COMPILE_AARCH64_PATH=~/you_kernel_ws/aarch64--glibc--stable-2022.08-1
-# export CROSS_COMPILE=~/you_kernel_ws/aarch64--glibc--stable-2022.08-1/bin/aarch64-buildroot-linux-gnu-
+# export CROSS_COMPILE_AARCH64_PATH=~/jetson_linux_36.5/aarch64--glibc--stable-2022.08-1
+# export CROSS_COMPILE=~/jetson_linux_36.5/aarch64--glibc--stable-2022.08-1/bin/aarch64-buildroot-linux-gnu-
 export IGNORE_PREEMPT_RT_PRESENCE=1
-export KERNEL_HEADERS=~/you_kernel_ws/Linux_for_Tegra/source/kernel/kernel-jammy-src/
+export KERNEL_HEADERS=~/jetson_linux_36.5/Linux_for_Tegra/source/kernel/kernel-jammy-src/
 
 # 编译设备树
 make dtbs
@@ -261,7 +267,7 @@ make dtbs
 
 ![device](../images/device_tree_13.png "截图")
 ```bash
-cd ~/you_kernel_ws
+cd ~/jetson_linux_36.5
 
 ll Linux_for_Tegra/source/kernel-devicetree/generic-dts/dtbs/
 ```
@@ -274,7 +280,7 @@ ll Linux_for_Tegra/source/kernel-devicetree/generic-dts/dtbs/
 1. 为Jetson Orin板卡替换设备树
 - 将生成的`.dtb`文件上传到Jetson Orin板卡上
 ```bash
-scp -r ~/you_kernel_ws/tegra234-p3768-0000+p3767-0000-nv.dtb ssh ubuntu@example.com：~/
+scp -r ~/jetson_linux_36.5/tegra234-p3768-0000+p3767-0000-nv.dtb ssh ubuntu@example.com：~/
 ```
 
 - 在Orin板卡上将得到的文件复制到`/boot/dtb/`下
