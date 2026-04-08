@@ -12,7 +12,7 @@
 |USB数据线|![image](./images/Jetson_Orin_03.png)|USB Type-C 2.0/3.0(推荐)（用于 Host PC 与 Orin 连接）|
 |固态硬盘|![image](./images/Jetson_Orin_04.png)|为安装系统镜像提供存储空间。Orin 模组的板载 eMMC 容量不足以支持镜像安装，需额外配备 SSD。建议容量大于 64GB 且健康状态良好|
 |无线网卡|![image](./images/Jetson_Orin_05.png)|为设备提供网络连接。部分环境依赖网络支持，建议配备无线网卡或使用有线网络|
-|主机网络|  |为主机设备提供网络连接。下载 SDK、Host 工具等组件依赖网络支持，建议配备无线网卡或使用有线网络|
+|主机网络|![image](./images/Jetson_Orin_20.png)|为主机设备提供网络连接。下载 SDK、Host 工具等组件依赖网络支持，建议配备无线网卡或使用有线网络|
 
 
 - 下载烧录工具
