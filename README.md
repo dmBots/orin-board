@@ -13,12 +13,14 @@ orin-board$ tree -L 2
 │   └── 使能UART方法
 ├── dm_orin_board_v1_information		# DM_Orin_Board_V1系列资料
 │   ├── 2D标注
+│   ├── DM-ORIN系列SDKmanager载板烧录说明书V1.0.pdf
 │   ├── Orin_NX-RJ45-V1.0.pdf
 │   └── 说明书		# v1版本说明书
 ├── dm_orin_board_v2_information		# DM_Orin_Board_V2系列资料
 │   ├── 2D  dm_orin_nx-cb-v3_1.pdf
 │   ├── 3D  DM Orin NX-CB-V3.2.zip
 │   ├── 3D文件
+│   ├── DM-ORIN系列SDKmanager载板烧录说明书V1.0.pdf
 │   ├── Realtek_r8125_DKMS				# RTL-8125 驱动
 │   ├── 外壳
 │   ├── 网口转接板
@@ -34,7 +36,7 @@ orin-board$ tree -L 2
 │   └── README.md
 └── README.md
 
-20 directories, 8 files
+20 directories, 10 files
 ```
 
 ### 更新要求
