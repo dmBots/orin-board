@@ -10,7 +10,7 @@
 |达妙Orin载板|![image](./images/Jetson_Orin_01.png)|Damiao_Orin_Board-V1/V2皆可(也可以是官方载板甚至其他第三方载板,但本文不做支持)|
 |Jetson Orin Modules|![image](./images/Jetson_Orin_02.png)|Orin NX/Nano/-Super (4G、8G、16G)|
 |USB数据线|![image](./images/Jetson_Orin_03.png)|USB Type-C 2.0/3.0(推荐)（用于 Host PC 与 Orin 连接）|
-|固态硬盘|![image](./images/Jetson_Orin_04.png)||
+|固态硬盘|![image](./images/Jetson_Orin_04.png)|为安装系统镜像提供存储空间。Orin 模组的板载 eMMC 容量不足以支持镜像安装，需额外配备 SSD。建议容量大于 64GB 且健康状态良好|
 |无线网卡|![image](./images/Jetson_Orin_05.png)|在一些必要环境下，设备需要网络支持，建议联网或者有线网络|
 |主机有线网卡|  |在一些必要环境下，设备需要网络支持，建议联网或者有线网络|
 
