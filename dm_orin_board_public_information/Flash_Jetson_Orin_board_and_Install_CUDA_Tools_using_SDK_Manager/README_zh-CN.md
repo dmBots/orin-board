@@ -106,3 +106,19 @@
 | CUDA 组件安装失败 | [CUDA_component_install_failed.md](./CUDA_component_install_failed.md) |
 | USB 连接失败 | [USB_connection_failed.md](./USB_connection_failed.md) |
 | SSD 状态异常 | [SSD_status_failed.md](./SSD_status_failed.md) |
+
+
+
+### 结束语
+
+- 至此，您的 Jetson Orin 系统烧录工作已基本完成。通过上述步骤，您应该能够成功登录系统并进入桌面环境，为后续的 AI 应用开发做好准备。
+
+- 如果您在使用中遇到问题，欢迎在gitee提交议题，我们会第一时间为您处理，请留意您的议题处理进度。
+
+    - 请先在 Gitee 平台搜索是否有相似议题，避免重复提交
+
+    - 若未找到解决方案，欢迎在 Gitee 提交新议题，我们会第一时间为您处理 
+	
+    - 请留意您的议题处理进度，以便及时跟进反馈
+
+- 感谢您使用达妙科技产品，祝您生活、工作愉快！
