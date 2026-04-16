@@ -1,5 +1,7 @@
 # DM-Orin 载板资料入口
 
+中文 | [EN](./README.en.md) | [GitHub English](https://github.com/dmBots/dmBot/blob/master/6.控制板/orin-board/README.md)
+
 ## 概述
 - 这里是 DM-Orin 载板资料入口，按 `public information`、`v1/v2` 版本资料、客户/其他资料和 `CAN` 例程分组。
 - 烧录、设备树、CSI、UART、Wi-Fi、CAN 等操作流程已迁移到 [USAGE.md](USAGE.md)，README 只保留入口和索引。

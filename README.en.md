@@ -1,5 +1,7 @@
 # DM-Orin
 
+[EN](./README.en.md) | [中文](./README.md) | [GitHub English](https://github.com/dmBots/dmBot/blob/master/6.控制板/orin-board/README.md)
+
 ## Overview
 - Supplemental English notes for the DM-Orin carrier board.
 - The workflow details live in [USAGE.md](USAGE.md), and the main entry is [README.md](README.md).
