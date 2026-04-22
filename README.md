@@ -8,8 +8,8 @@ orin-board$ tree -L 2
 ├── dm_orin_board_public_information		# 通用教程目录，适用于v1、v2载板
 │   ├── Flash_Jetson_Orin_board_and_Install_CUDA_Tools_using_SDK Manager    # Orin 载板烧录方法
 │   ├── iwlwifi-offline						# Intel 无线网卡驱动安装
+│   ├── Jetson_Orin_Board_RTC_Sync          # 对RTC功能的支持
 │   ├── Jetson_Orin_CSI_Camera_Support      # 达妙Orin 系列载板 CSI 相机适配和使用方法
-│   ├── rtc设置.rar 
 │   ├── serial_usb3_dts_patches				# 设备树适配
 │   └── 使能UART方法
 ├── dm_orin_board_v1_information		# DM_Orin_Board_V1系列资料
@@ -37,7 +37,7 @@ orin-board$ tree -L 2
 │   └── README.md
 └── README.md
 
-21 directories, 10 files
+22 directories, 9 files
 ```
 
 ### 更新要求
