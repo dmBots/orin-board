@@ -11,4 +11,4 @@ This repository is part of the DAMIAO public materials system.
 - dm_orin_board_v1_information
 - dm_orin_board_v2_information
 - guest_source_or_other_information
-- orin载板can控制达妙电机例程
+- orin-carrier-can-damiao-motor-example
